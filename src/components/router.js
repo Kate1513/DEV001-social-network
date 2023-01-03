@@ -1,6 +1,7 @@
 import { login } from './login.js';
 import { signUp } from './signup.js';
 import { wall } from './wall.js';
+
 const rootDiv = document.querySelector('#root');
 let routes = {};
 

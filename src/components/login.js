@@ -1,3 +1,5 @@
+import { loginUser } from '../lib/authentication';
+
 export const login = (onNavigate) => {
   const loginSection = document.createElement('section');
   loginSection.classList.add('login-page');
@@ -23,6 +25,20 @@ export const login = (onNavigate) => {
     </section>
   </section> 
   `;
+
+  const submit = loginSection.querySelector('.page-1');
+  submit.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const email = submit.email.value;
+    const password = submit.password.value;
+    loginUser(email, password).then((user) => {
+      if (user) {
+        sessionStorage.setItem('uid', user.uid);
+        return onNavigate('/wall');
+      }
+      return alert('Datos de sesion incorrectos.');
+    });
+  });
 
   const signUpBtn = loginSection.querySelector('.go-pageRegister');
   signUpBtn.addEventListener('click', () => onNavigate('/signup'));

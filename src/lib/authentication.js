@@ -1,16 +1,37 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebase.js';
-// import { signUp } from '../components/signup.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from './firebase.js';
 
-export const signUpUser = (event, email, password) => {
-  console.log('perrito');
-  event.preventDefault();
-  console.log(email, password);
+// Creacion de usuario
+export const signUpUser = async (nickname, birthDate, email, password) => {
+  await createUserWithEmailAndPassword(auth, email, password)
 
-  // try {
-  //   const resultSignUp = await createUserWithEmailAndPassword(auth, email, password);
-  //   console.log(resultSignUp);
-  // } catch (error) {
-  //   console.log(error);
-  // }
+    .then((newUser) => {
+      const user = newUser.user;
+      setDoc(doc(db, 'Users', user.uid), {
+        name: nickname,
+        birth_date: birthDate,
+      });
+      return 'Succesful';
+    })
+    .catch((error) => {
+      const errorMessage = error.message;
+      throw new Error(errorMessage);
+    });
 };
+
+// Inicio de sesion de usuario
+export const loginUser = async (email, password) => {
+  const userObject = await signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      const isUser = true;
+      return isUser;
+    })
+    .catch(() => {
+      const notUser = false;
+      return notUser;
+    });
+  return userObject;
+};
+
+//

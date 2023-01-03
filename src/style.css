@@ -61,7 +61,7 @@ h2 {
     align-items: center;
 }
 
-.nickname, .dateBorn, .passwordVerified, .registerGoogle, .email, .password, .startSesion, .startGoogle, h3 {
+.nickname, .birthDate, .passwordVerified, .registerGoogle, .email, .password, .startSesion, .startGoogle, h3 {
     margin: 1.5rem 0 1.5rem 0;
 }
 
@@ -72,17 +72,18 @@ h2 {
     margin-right: 5px;
 }
 
-.nickname, .dateBorn, .passwordVerified, .email, .password {
+.nickname, .birthDate, .passwordVerified, .email, .password {
+    width: 70%;
+    background-color: #F5F5F5;
+    font-size: 1.4rem;
     padding: 12px;
     border-radius: 7px;
     border-width: 1px;
 }
 
-.nickname, .dateBorn, .passwordVerified, .email, .password {
-    width: 70%;
-    background-color: #F5F5F5;
-    font-size: 1.4rem;
-}
+/* .nickname, .birthDate, .passwordVerified, .email, .password {
+    
+} */
 
 ::placeholder {
     font-size: 1.4rem;

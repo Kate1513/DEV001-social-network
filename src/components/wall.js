@@ -1,40 +1,45 @@
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../lib/firebase';
+import { logoutUser } from '../lib/authentication.js';
+import { wallInfoUser } from '../lib/wall_Info.js';
 
 export const wall = () => {
-  // let data = {};
-  // onAuthStateChanged(auth, async (user) => {
-  //   if (user) {
-  // const loginUser = sessionStorage.getItem('uid');
-  // const querySnapUser = getDoc(doc(db, 'Users', loginUser));
-  // const userObj = querySnapUser.data();
-  // Object.defineProperty(userObj, 'email', { value:loginUser });
-  // data = userObj;
-  //   }
-  // });
-  // console.log(data.name);
-
   const wallSection = document.createElement('section');
   wallSection.classList.add('wall-page');
   wallSection.innerHTML = ` 
-    <header class="wall-header">
+    <section class="wall-header">
       <figure class="images-header">
         <img class="logo-h" src="images/logo-social-pet-h.png" alt="Imagen del logo Social Pet">
-        <img class="sign-out" src="images/sign-out.svg" alt="Imagen para salir de la aplicacion">
+        <img class="signOut-icon" src="images/sign-out.svg" alt="Imagen para salir de la aplicacion">
       </figure>      
-    </header>
+    </section>
     <main>
       <section class="wall-posting">   
-        <textarea class="input-post" placeholder="Ingrese su texto aqui..." value="" autofocus"></textarea>        
-      </section>
-      <section class="wall-posts">   
-           <h1>po</h1>     
+        <textarea class="input-post" placeholder="Ingrese su texto aqui..." value="" autofocus"></textarea>   
+        <section>
+          <button type="button" class="create-post">Publicar</button>
+        </section>        
+        </section>
+        <hr>
+      <section class="wall-posts">
+        <section class="post-header">
+          <div class="info-user"> 
+            <img class="image-user" src="" alt="Imagen de perfil del usuario">
+            <p class="name-user"></p>  
+          </div>            
+          <img class="options-post" src="images/ellipsis.svg" alt="Opciones de la publicacion (Puntos suspensivos))">
+        </section>
+        <img class="image-user" src="" alt="Imagen de perfil del usuario">
       </section>
     </main>
     <footer>
+      <img class="gear-icon" src="images/gear.svg" alt="Imagen de perfil del usuario">
     </footer>      
     `;
+  const nameTitle = wallSection.querySelector('.name-user');
+  const logOutButton = wallSection.querySelector('.signOut-icon');
 
+  logOutButton.addEventListener('click', () => {
+    logoutUser();
+  });
+  wallInfoUser(nameTitle);
   return wallSection;
 };

@@ -33,8 +33,7 @@ export const login = (onNavigate) => {
     const password = submit.password.value;
     loginUser(email, password).then((user) => {
       if (user) {
-        sessionStorage.setItem('uid', user.uid);
-        return onNavigate('/wall');
+        return window.location.assign('/wall');
       }
       return alert('Datos de sesion incorrectos.');
     });

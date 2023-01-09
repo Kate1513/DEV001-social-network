@@ -9,7 +9,7 @@ html {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
+.login-page, .signUp-page {
     background-image: url("images/fondo-huellitas.jpeg");
 }
 
@@ -25,8 +25,13 @@ body {
 }
 
 .login-info, .signUp-info {
+    display: flex;
+    flex-direction: column;
+    margin: 0 2rem;
+    max-width: 42rem;
     background-color: #F5F5F5;
     opacity: 0.9;
+    border-radius: 10px;
 }
 
 header {
@@ -81,10 +86,6 @@ h2 {
     border-width: 1px;
 }
 
-/* .nickname, .birthDate, .passwordVerified, .email, .password {
-    
-} */
-
 ::placeholder {
     font-size: 1.4rem;
 }
@@ -110,6 +111,21 @@ h3 {
 
 .registerGoogle, .nickname {
     margin-top: 2.5rem;
+}
+
+.modal{
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 40%;
 }
 
 @media (min-width: 768px) {

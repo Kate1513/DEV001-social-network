@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from './firebase.js';
 
@@ -22,16 +22,33 @@ export const signUpUser = async (nickname, birthDate, email, password) => {
 
 // Inicio de sesion de usuario
 export const loginUser = async (email, password) => {
-  const userObject = await signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      const isUser = true;
-      return isUser;
+  const isUser = await signInWithEmailAndPassword(auth, email, password)
+    .then((user) => {
+      sessionStorage.setItem('uid', user.user.uid);
+      const validUser = true;
+      return validUser;
     })
     .catch(() => {
       const notUser = false;
       return notUser;
     });
-  return userObject;
+  return isUser;
+};
+
+// Sesion Activa
+export const isActiveSession = (logged) => {
+  if (logged) {
+    return true;
+  }
+  return false;
+};
+
+// Cierre de sesion de usuario
+export const logoutUser = async () => {
+  await signOut(auth).then(() => {
+    sessionStorage.clear();
+    window.location.reload();
+  });
 };
 
 //

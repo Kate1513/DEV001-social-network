@@ -24,11 +24,21 @@ export const signUp = (onNavigate) => {
           <h3>Al registrarte, aceptas nuestras <a href="" class="go-pageCondition">condiciones</a>, la <a href="" class="go-pagePoliticPrivacity">Politica de privacidad</a> y la 
           <a href="" class="go-pagePoliticCookies">Politica de cookies</a></h3>   
         </form>
+        <div class="modal">
+          <div class="modal-content">
+            <h2>Advertencia</h2>
+            <p class="msg-user"></p>
+            <button type="button" class="acept-msg">Aceptar</button>
+          </div>
+        </div>
       </main>
     </section>
   </section>`;
 
   const submit = signUpSection.querySelector('.page-2');
+  const modal = signUpSection.querySelector('.modal');
+  let msgUser = signUpSection.querySelector('.msg-user');
+
   submit.addEventListener('submit', (event) => {
     event.preventDefault();
     const name = submit.nickname.value;
@@ -36,9 +46,13 @@ export const signUp = (onNavigate) => {
     const email = submit.email.value;
     const password = submit.password.value;
     signUpUser(name, birthDate, email, password).then(() => {
+      sessionStorage.setItem('name', name);
       onNavigate('/wall');
-      return alert('Usuario registrado');})
-      .catch(() => alert('Datos incorrectos'));
+      modal.style.display = 'block';
+      const userMsg = msgUser;
+      userMsg = 'Usuario registrado';
+    });
+    modal.style.display = 'block';
   });
 
   // const aceptBtn = signUpSection.querySelector('.acept');

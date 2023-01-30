@@ -9,6 +9,8 @@ const isLogged = sessionStorage.length;
 
 if (!isActiveSession(isLogged) && window.location.pathname === '/wall') {
   onNavigate('/');
+} else if (isActiveSession(isLogged) && window.location.pathname !== '/wall') {
+  onNavigate('/wall');
 } else {
   rootDiv.appendChild(component);
 }

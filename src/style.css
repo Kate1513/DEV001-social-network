@@ -17,7 +17,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .dog-hi, .happy-dogs {
@@ -38,7 +38,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 .logo-login {
@@ -51,12 +51,23 @@ h1 {
     font-size: 4rem;
 }
 
-h2 {
+h2 .title-msg {
     width: 70%;
     min-width: 350px;
     text-align: center;
-    margin: 1rem 0 3rem 0;
-    font-size: 3rem;
+    font-size: 2.5rem;
+}
+
+h2 {
+    margin: 1rem 0;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+p{
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 .page-1, .page-2 {
@@ -67,7 +78,7 @@ h2 {
 }
 
 .nickname, .birthDate, .passwordVerified, .registerGoogle, .email, .password, .startSesion, .startGoogle, h3 {
-    margin: 1.5rem 0 1.5rem 0;
+    margin: 1rem;
 }
 
 .icon-Google {
@@ -101,8 +112,8 @@ h3 {
 }
 
 .registerGoogle, .acept, .startGoogle, .startSesion {
-    padding: 12px;
-    font-size: 1.6rem;
+    padding: 10px;
+    font-size: 1.5rem;
     font-weight: bold;
     border-radius: 20px;
     border-width: 1px;
@@ -110,23 +121,21 @@ h3 {
 }
 
 .registerGoogle, .nickname {
-    margin-top: 2.5rem;
+    margin-top: 1rem;
 }
 
-.modal{
-    display: none; 
-    position: fixed;
-    z-index: 1;
-    background-color: rgba(0,0,0,0.5);
-}
+dialog {
+    max-width: 280px;
+    padding: 35px 12px;
+    margin: auto;
+    border: 4px solid #321c3b;
+    background-color: #FAFAFA;
+  }
 
-.modal-content{
+  .modalBtns{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    top: 40%;
-}
+    justify-content: center;
+  }
 
 @media (min-width: 768px) {
 
@@ -134,7 +143,8 @@ h3 {
         width: 40rem;
     }
     .login-p, .signUp-p {        
-        justify-content: space-evenly;        
+        justify-content: space-evenly; 
+        margin: 0 10rem;
     }
 
     .dog-hi {
@@ -144,12 +154,27 @@ h3 {
 
     .happy-dogs {
         display: block;
-        width: 55rem;
+        width: 35rem;
+        border-radius: 10px;
+    }
+
+    h2 {
+        margin: 2rem 0;
+        font-size: 3rem;
+    }
+    
+    p{
+        margin: 2rem 0;
+        font-size: 2rem;
     }
 
 }
 
 @media (min-width: 1300px) {
+
+    .login-p, .signUp-p{
+        margin: 0 15rem;
+    }
 
     .dog-hi {
         display: block;
@@ -158,7 +183,7 @@ h3 {
 
     .happy-dogs {
         display: block;
-        width: 70rem;
+        width: 50rem;
     }
 }
     

@@ -1,7 +1,13 @@
-import { logoutUser } from '../lib/authentication.js';
-import { wallInfoUser } from '../lib/wall_Info.js';
+import { logoutUser, isActiveSession } from '../lib/authentication.js';
+import { infoUser, printPost, publishPost } from '../lib/wall_Info.js';
 
 export const wall = () => {
+  const dataSessionStorage = window.sessionStorage;
+
+  if (!isActiveSession(dataSessionStorage.length)) {
+    return null;
+  }
+
   const wallSection = document.createElement('section');
   wallSection.classList.add('wall-page');
   wallSection.innerHTML = ` 
@@ -12,34 +18,65 @@ export const wall = () => {
       </figure>      
     </section>
     <main>
+      <section class="profile-user">
+        <div class="info-user"> 
+          <img class="photo-user" src="" alt="Imagen de perfil del usuario">
+          <p class="name-user"></p>  
+        </div>
+      </section>
       <section class="wall-posting">   
-        <textarea class="input-post" placeholder="Ingrese su texto aqui..." value="" autofocus"></textarea>   
+        <textarea class="input-post" placeholder="Ingrese su texto aqui..." autofocus" ></textarea>   
         <section>
           <button type="button" class="create-post">Publicar</button>
         </section>        
         </section>
         <hr>
       <section class="wall-posts">
-        <section class="post-header">
-          <div class="info-user"> 
-            <img class="image-user" src="" alt="Imagen de perfil del usuario">
-            <p class="name-user"></p>  
-          </div>            
-          <img class="options-post" src="images/ellipsis.svg" alt="Opciones de la publicacion (Puntos suspensivos))">
+        <section class="post-header">                      
         </section>
-        <img class="image-user" src="" alt="Imagen de perfil del usuario">
       </section>
     </main>
+    <dialog id="modalDelete">
+      <h2>Advertencia</h2>
+      <p class="msg-delete">¿Quieres eliminar esta publicacion?</p>
+      <div class="modalBtns">
+        <button class="deleteBtn">Eliminar</button>
+        <button class="cancelBtn">Cancelar</button>
+      <div>
+    </dialog>
     <footer>
       <img class="gear-icon" src="images/gear.svg" alt="Imagen de perfil del usuario">
     </footer>      
     `;
   const nameTitle = wallSection.querySelector('.name-user');
+  const userPhoto = wallSection.querySelector('.photo-user');
   const logOutButton = wallSection.querySelector('.signOut-icon');
+  const createPostBtn = wallSection.querySelector('.create-post');
+  const inputPost = wallSection.querySelector('.input-post');
+  const wallPosts = wallSection.querySelector('.wall-posts');
+  const deleteBtn = wallSection.querySelector('.deleteBtn');
+  const cancelBtn = wallSection.querySelector('.cancelBtn');
+
+  infoUser(dataSessionStorage.getItem('uid'), nameTitle, userPhoto);
+  printPost(wallPosts, deleteBtn, cancelBtn);
+
+  createPostBtn.addEventListener('click', () => {
+    const contentPost = inputPost.value;
+    if (contentPost !== '') {
+      publishPost(dataSessionStorage.getItem('uid'), contentPost)
+        .catch((error) => {
+          document.alert(error);
+        });
+      printPost(wallPosts);
+      inputPost.value = '';
+    }
+  });
 
   logOutButton.addEventListener('click', () => {
     logoutUser();
+    sessionStorage.clear();
+    window.location.reload();
   });
-  wallInfoUser(nameTitle);
+
   return wallSection;
 };

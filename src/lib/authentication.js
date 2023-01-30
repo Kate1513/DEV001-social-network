@@ -4,38 +4,34 @@ import { auth, db } from './firebase.js';
 
 // Creacion de usuario
 export const signUpUser = async (nickname, birthDate, email, password) => {
-  await createUserWithEmailAndPassword(auth, email, password)
-
-    .then((newUser) => {
-      const user = newUser.user;
-      setDoc(doc(db, 'Users', user.uid), {
+  const newUser = await createUserWithEmailAndPassword(auth, email, password)
+    .then(async (credentials) => {
+      const userUID = credentials.user.uid;
+      await setDoc(doc(db, 'Users', userUID), {
         name: nickname,
         birth_date: birthDate,
+        profilePhoto: 'https://icons8.com/icon/33901/cat-profile',
       });
-      return 'Succesful';
+      return userUID;
     })
     .catch((error) => {
-      const errorMessage = error.message;
-      throw new Error(errorMessage);
+      const errorCode = error.code;
+      throw new Error(errorCode);
     });
+  return newUser;
 };
 
-// Inicio de sesion de usuario
+// Inicio de sesion de usuario: Devuelve false: booleano, true: objecto userCredential.
 export const loginUser = async (email, password) => {
-  const isUser = await signInWithEmailAndPassword(auth, email, password)
-    .then((user) => {
-      sessionStorage.setItem('uid', user.user.uid);
-      const validUser = true;
-      return validUser;
-    })
-    .catch(() => {
-      const notUser = false;
-      return notUser;
-    });
-  return isUser;
+  const loggedUser = await signInWithEmailAndPassword(auth, email, password)
+    .catch(() => false);
+  if (!loggedUser) {
+    return false;
+  }
+  return loggedUser;
 };
 
-// Sesion Activa
+// Sesion Activa: Input: Información de login, Ouput: Booleano.
 export const isActiveSession = (logged) => {
   if (logged) {
     return true;
@@ -44,11 +40,6 @@ export const isActiveSession = (logged) => {
 };
 
 // Cierre de sesion de usuario
-export const logoutUser = async () => {
-  await signOut(auth).then(() => {
-    sessionStorage.clear();
-    window.location.reload();
-  });
+export const logoutUser = () => {
+  signOut(auth);
 };
-
-//

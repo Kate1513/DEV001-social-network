@@ -16,11 +16,11 @@ Este aplicativo web es una red social alternativa para los dueños de mascotas q
 
 ## 2. Funciones de la pagina web
 
-Para realizar un uso apropiado del aplicativo web, e:
+Para realizar un uso apropiado del aplicativo web se pueden ejecutar las siguientes acciones:
 
   * Realizar el registro de usuarios nuevos, indicando su nombre, fecha de nacimiento, correo y contraseña.
   * Incio de sesion de usuarios previamente registrados con su correo y contraseña.
-  * Crear y eliminar publicaciones en la seccion de muro.
+  * Ver, crear y eliminar publicaciones en la seccion de muro.
 
 ## 3. Restricciones
 

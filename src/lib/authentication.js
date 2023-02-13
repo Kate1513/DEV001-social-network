@@ -2,23 +2,24 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from './firebase.js';
 
-// Creacion de usuario
-export const signUpUser = async (nickname, birthDate, email, password) => {
-  const newUser = await createUserWithEmailAndPassword(auth, email, password)
-    .then(async (credentials) => {
-      const userUID = credentials.user.uid;
-      await setDoc(doc(db, 'Users', userUID), {
-        name: nickname,
-        birth_date: birthDate,
-        profilePhoto: 'https://icons8.com/icon/33901/cat-profile',
-      });
-      return userUID;
-    })
+// Creacion de usuario en Auth Firebase.
+export const signUpUser = (email, password) => {
+  const uid = createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => userCredential.user.uid)
     .catch((error) => {
       const errorCode = error.code;
       throw new Error(errorCode);
     });
-  return newUser;
+  return uid;
+};
+
+// Creacion del documento de usuario en Firestore.
+export const registerDocUser = async (uid, nickname, birthDate) => {
+  await setDoc(doc(db, 'Users', uid), {
+    name: nickname,
+    birth_date: birthDate,
+    profilePhoto: '../images/profile-user.png',
+  });
 };
 
 // Inicio de sesion de usuario: Devuelve false: booleano, true: objecto userCredential.

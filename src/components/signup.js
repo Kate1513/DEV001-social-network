@@ -1,4 +1,4 @@
-import { signUpUser } from '../lib/authentication.js';
+import { registerDocUser, signUpUser } from '../lib/authentication.js';
 
 export const signUp = () => {
   const signUpSection = document.createElement('section');
@@ -25,11 +25,17 @@ export const signUp = () => {
           <a href="" class="go-pagePoliticCookies">Politica de cookies</a></h3>   
         </form>
       </main>
+      <dialog id="modalSignup">
+        <h2>Advertencia</h2>
+          <p class="msg-user">Datos de inicio de sesion incorrectos</p>
+        <div class="modalBtn"> 
+          <button class="closeBtn" onclick="window.modalSignup".close();">Aceptar</button>
+        </div> 
+      </dialog>
     </section>
   </section>`;
 
   const submit = signUpSection.querySelector('.page-2');
-  // const modal = signUpSection.querySelector('.modal');
   const msgUser = signUpSection.querySelector('.msg-user');
 
   submit.addEventListener('submit', (event) => {
@@ -38,13 +44,19 @@ export const signUp = () => {
     const birthDate = submit.birthDate.value;
     const email = submit.email.value;
     const password = submit.password.value;
-    signUpUser(name, birthDate, email, password)
+    signUpUser(email, password)
       .then((uid) => {
         sessionStorage.setItem('uid', uid);
-        window.location.assign('/wall');
+      })
+      .then(() => {
+        registerDocUser(sessionStorage.uid, name, birthDate)
+          .then(() => {
+            window.location.assign('/wall');
+          });
       })
       .catch((error) => {
         msgUser.innerHTML = error;
+        window.modalSignup.showModal();
       });
   });
 

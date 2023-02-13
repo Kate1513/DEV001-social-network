@@ -43,10 +43,7 @@ export const wall = () => {
         <button class="deleteBtn">Eliminar</button>
         <button class="cancelBtn">Cancelar</button>
       <div>
-    </dialog>
-    <footer>
-      <img class="gear-icon" src="images/gear.svg" alt="Imagen de perfil del usuario">
-    </footer>      
+    </dialog>   
     `;
   const nameTitle = wallSection.querySelector('.name-user');
   const userPhoto = wallSection.querySelector('.photo-user');
@@ -67,7 +64,7 @@ export const wall = () => {
         .catch((error) => {
           document.alert(error);
         });
-      printPost(wallPosts);
+      printPost(wallPosts, deleteBtn, cancelBtn);
       inputPost.value = '';
     }
   });

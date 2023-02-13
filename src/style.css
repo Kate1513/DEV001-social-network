@@ -132,7 +132,7 @@ dialog {
     background-color: #FAFAFA;
   }
 
-  .modalBtns{
+  .modalBtn, .modalBtns{
     display: flex;
     justify-content: center;
   }
